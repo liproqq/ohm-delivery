@@ -1,30 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="lib/angular/angular.js"></script>
-        <script src="./main.js"></script>
-        <link rel="stylesheet" type="text/css" href="main.css">
-        <title>Ohm Delivery</title>
-    </head>
-    <body>
-        <div class="banner">
-            <h1>Ohm Delivery</h1>
-            <h2>Get shocked by the power</h2>
-        </div>
-        
-        <div ng-app="ohm-delivery">
-            <form ng-controller="tracking" ng-submit="sendData()">
-                <p>
-                    <input id="tracking" type="text" ng-model="trackingId" placeholder="Enter your tracking id"/>
-                </p>
-                <p>
-                    <button id="formBtn" type="submit">Submit</button>
-                </p>
-                <p>
-                    <span ng-if="errorMessage">{{errorMessage}}</span>
-                </p>
-            </form>
-        </div>
-    </body>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="lib/angular/angular.js"></script>
+    <script src="./main.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <title>Ohm Delivery</title>
+</head>
+
+<body>
+    <div class="banner">
+        <h1>Ohm Delivery</h1>
+        <h2>Get shocked by the power</h2>
+    </div>
+
+    <div ng-app="ohm-delivery" ng-controller="tracking">
+        <form ng-submit="sendData()">
+            <p>
+                <input id="tracking" type="text" ng-model="trackingId" placeholder="Enter your tracking id" />
+            </p>
+            <p>
+                <button id="formBtn" type="submit">Submit</button>
+            </p>
+            <p ng-if="trackingData">
+                Tracking ID: {{trackingData.trackingId}}
+                <br>
+                Status of your delivery: {{trackingData.status}}
+            </p>
+            <p>
+                <span ng-if="confirmationMessage">{{confirmationMessage}}</span>
+            </p>
+            <p>
+                <span ng-if="errorMessage">{{errorMessage}}</span>
+            </p>
+        </form>
+        <form ng-if="trackingData" ng-submit="confirmDelivery(finalizeStatus, comment)">
+            <p>
+                <input id="comment" type="textarea" rows="4" ng-model="comment"
+                    placeholder="Please let us know what went well and what went wrong" />
+            </p>
+            <p>
+                <label for="final-status">Please let us know what the status of the ohm is:</label>
+                <select ng-model="finalizeStatus">
+                    <option value="DELIVERED">Delivered</option>
+                    <option value="REFUSED">Refused</option>
+                </select>
+            </p>
+            <p>
+                <button id="formBtn" type="submit">Submit</button>
+            </p>
+
+        </form>
+    </div>
+
+</body>
+
 </html>
